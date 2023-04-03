@@ -1,20 +1,26 @@
 {
   "name": "selfie-grader",
   "displayName": "Selfie Grader",
-  "description": "This Extension lets you use the \"run\" Button in the upper right corner to run the assignment grader",
+  "description": "This Extension lets you use a \"run\" Button in the upper right corner to run the assignment grader",
   "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ob-julian/my-extension.git"
-  },
   "author": {
     "name": "Julian Oberhofer"
   },
-  "readme": "README.md",
+  "icon": "images/logo.png",
   "engines": {
     "vscode": "^1.77.0"
   },
+  "readme": "README.md",
+  "homepage": "https://github.com/ob-julian/vscode-selfie-grader/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ob-julian/vscode-selfie-grader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ob-julian/vscode-selfie-grader/issues"
+  },
   "categories": [
+    "Programming Languages",
     "Other"
   ],
   "keywords": [
