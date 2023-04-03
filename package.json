@@ -1,0 +1,127 @@
+{
+  "name": "selfie-grader",
+  "displayName": "Selfie Grader",
+  "description": "This Extension lets you use the \"run\" Button in the upper right corner to run the assignment grader",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ob-julian/my-extension.git"
+  },
+  "author": {
+    "name": "Julian Oberhofer"
+  },
+  "readme": "README.md",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "selfie",
+    "grader"
+  ],
+  "activationEvents": [
+    "workspaceContains:/selfie.c"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "selfie-grader.runGrader",
+        "title": "Run Grader",
+        "shortTitle": "Run",
+        "category": "Grader",
+        "icon": "$(run)"
+      },{
+        "command": "selfie-grader.graderOptions",
+        "title": "Grader Options",
+        "category": "Grader",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "selfie-grader.runGrader",
+          "when": "resourceDirname =~ /selfie/",
+          "category": "Grader"
+        },
+        {
+          "command": "selfie-grader.graderOptions",
+          "when": "resourceDirname =~ /selfie/",
+          "category": "Grader"
+        }
+      ],
+      "editor/title/run": [
+        {
+          "command": "selfie-grader.runGrader",
+          "group": "navigation"
+        },{
+          "command": "selfie-grader.graderOptions",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "selfie-grader.runGrader",
+          "group": "navigation"
+        },
+        {
+          "command": "selfie-grader.graderOptions",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "selfie-grader.runGrader",
+          "group": "navigation"
+        },
+        {
+          "command": "selfie-grader.graderOptions",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Selfie Grader",
+      "properties": {
+        "selfie-grader.clearPreviousOutput": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to clear previous output before each run.",
+          "scope": "resource"
+        },
+        "selfie-grader.runInTerminal": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to run the grader in Integrated Terminal.",
+          "scope": "resource"
+        },
+        "selfie-grader.preserveFocus": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to preserve focus on the code editor afte the grader is triggered.",
+          "scope": "resource"
+        }
+      }
+    }
+  },
+
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.77.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5",
+    "@vscode/test-electron": "^2.3.0"
+  }
+}
