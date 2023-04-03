@@ -18,13 +18,18 @@ function activate(context) {
 	let selected = '';
 
 	const config = vscode.workspace.getConfiguration('selfie-grader');
-	
+
 
 	let runGraderCommand = vscode.commands.registerCommand('selfie-grader.runGrader', function () {
 		if(vscode.workspace.name !== 'selfie'){
 			vscode.window.showErrorMessage('Please open the selfie folder as workspace');
 			return;
 		}
+		if(vscode.workspace.isTrusted === false){
+			vscode.window.showErrorMessage('Executing the Selfie Grader disabled in a untrusted workspace');
+			return;
+		}
+
 
 		const clearPreviousOutput = config.get('clearPreviousOutput') === true;
 		const preserveFocus = config.get('preserveFocus') === true;
@@ -148,6 +153,11 @@ function activate(context) {
 			vscode.window.showErrorMessage('Please open the selfie folder as workspace');
 			return;
 		}
+		if(vscode.workspace.isTrusted === false){
+			vscode.window.showErrorMessage('Executing the Selfie Grader disabled in a untrusted workspace');
+			return;
+		}
+		
 		const quickPick = vscode.window.createQuickPick();
 		quickPick.items = assignments.map(label => ({ label }));
 		quickPick.onDidChangeSelection(selection => {

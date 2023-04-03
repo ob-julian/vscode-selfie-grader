@@ -6,9 +6,20 @@
   "author": {
     "name": "Julian Oberhofer"
   },
+  "publisher": "Julian Oberhofer",
   "icon": "images/logo.png",
   "engines": {
     "vscode": "^1.77.0"
+  },
+  "capabilities": {
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "Selfie Grader is not yet propperly testd in virtual workspaces."
+    },
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Executing code in untrusted workspaces is not recommended, so Selfie Grader is not supported in untrusted workspaces."
+    }
   },
   "readme": "README.md",
   "homepage": "https://github.com/ob-julian/vscode-selfie-grader/blob/main/README.md",
