@@ -4,20 +4,27 @@ This is a VSCode extension that allows you to run the grader for the [selfie sys
 
 ## Features
 
+### Buttons
+
 If in a Workspace with /selfie/ as the current working directory, the extension adds two buttons at the upper right corner of the editor. \
-Hint: The two buttons are compressed into one button and a dropdown/select menu by VSCode. \
+>Hint: The two buttons are compressed into one button and a dropdown/select menu by VSCode. 
+
 The Labels of the buttons are:
 * `▷ Run Grader`: Runs the grader 
 * `⚙ Grader Options`: Lets you select the assignment you want to run the grader for.
 
-In addition, the extension adds the functionality of the two buttons to the command palette as well.
+### Commands
+
+In addition, the extension adds the functionality of the two buttons to the command palette as well. \
+You can access the command palette by pressing `Ctrl + Shift + P` or `Cmd + Shift + P` on Mac.
 * `Grader: Run Grader`: Runs the grader 
 * `Grader: Grader Options`: Lets you select the assignment you want to run the grader for.
 
 ## Quality of Life Features
 
-After opening the Workspace, no assignment is selected. \
 If you run `Run Grader` without selecting an assignment beforehand, the Extension will run `Grader Options` automatically. \
+> Hint: After opening the Workspace, no assignment is selected.
+
 Furthermore, if you run `Grader Options` and select an assignment, the extension will run `Run Grader` afterward automatically. 
 
 ## Requirements
