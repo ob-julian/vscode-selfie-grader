@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<!-- Please search existing issues to avoid creating duplicates. -->
+
 **General Information**
 - VS Code Version:
 - OS Version:
