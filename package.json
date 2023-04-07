@@ -7,14 +7,13 @@
     "name": "Julian Oberhofer"
   },
   "publisher": "Julian Oberhofer",
-  "icon": "images/logo.png",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.77.0"
   },
   "capabilities": {
     "virtualWorkspaces": {
-      "supported": false,
-      "description": "Selfie Grader is not yet propperly testd in virtual workspaces."
+      "supported": true
     },
     "untrustedWorkspaces": {
       "supported": false,
@@ -50,7 +49,8 @@
         "shortTitle": "Run",
         "category": "Grader",
         "icon": "$(run)"
-      },{
+      },
+      {
         "command": "selfie-grader.graderOptions",
         "title": "Grader Options",
         "category": "Grader",
@@ -73,30 +73,14 @@
       "editor/title/run": [
         {
           "command": "selfie-grader.runGrader",
-          "group": "navigation"
-        },{
-          "command": "selfie-grader.graderOptions",
-          "group": "navigation"
-        }
-      ],
-      "editor/context": [
-        {
-          "command": "selfie-grader.runGrader",
-          "group": "navigation"
+          "alt": "selfie-grader.graderOptions",
+          "when": "resourceDirname =~ /selfie/",
+          "group": "1_grade"
         },
         {
           "command": "selfie-grader.graderOptions",
-          "group": "navigation"
-        }
-      ],
-      "explorer/context": [
-        {
-          "command": "selfie-grader.runGrader",
-          "group": "navigation"
-        },
-        {
-          "command": "selfie-grader.graderOptions",
-          "group": "navigation"
+          "when": "resourceDirname =~ /selfie/",
+          "group": "1_grade"
         }
       ]
     },
@@ -111,7 +95,7 @@
         },
         "selfie-grader.runInTerminal": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Whether to run the grader in Integrated Terminal.",
           "scope": "resource"
         },
@@ -119,6 +103,12 @@
           "type": "boolean",
           "default": true,
           "description": "Whether to preserve focus on the code editor afte the grader is triggered.",
+          "scope": "resource"
+        },
+        "selfie-grader.options": {
+          "type": "string",
+          "default": "",
+          "description": "Options to pass to the grader.",
           "scope": "resource"
         }
       }
