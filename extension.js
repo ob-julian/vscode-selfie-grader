@@ -158,21 +158,10 @@ function activate(context) {
 	const readStream = fs.createReadStream(absolutePathToPyProgramm, { encoding: 'utf-8' });
 
 	readStream.on('data', function(chunk) {
-		const lines = chunk.toString().split('\n'); //(chunk can be Buffer or String) so toString() is to avoid that a Buffer split (which does not exist) is called
-		let insideAssignments = false;
-
-		for (let i = 0; i < lines.length; i++) {
-			if (lines[i].startsWith('assignments: List[Assignment] = [')) {
-				insideAssignments = true;
-				continue;
-			}
-			if (lines[i].trim() === ']') {
-				insideAssignments = false;
-				continue;
-			}
-			if (insideAssignments) {
-				assignments.push(lines[i].trim().replace('assignment_', '').replace(',','').replace(/_/g,'-'));
-			}
+		const data = chunk.toString(); //(chunk can be Buffer or String) so toString() is to avoid that a Buffer split (which does not exist) is called
+		const assignmentRaw = data.split('Assignment(\'');
+		for (let i = 1; i < assignmentRaw.length; i++) {
+			assignments.push(assignmentRaw[i].split('\'')[0]);
 		}
 	});
 
