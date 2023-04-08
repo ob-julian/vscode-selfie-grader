@@ -2,7 +2,7 @@
   "name": "selfie-grader",
   "displayName": "Selfie Grader",
   "description": "This Extension lets you use a \"run\" Button in the upper right corner to run the assignment grader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Julian Oberhofer"
   },
@@ -114,7 +114,6 @@
       }
     }
   },
-
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
