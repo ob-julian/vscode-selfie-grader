@@ -4,3 +4,5 @@ node_modules
 .idea
 testing
 vsc-extension-quickstart.md
+*.bat
+images/icon-big.png
