@@ -6,7 +6,7 @@ This is a VSCode extension that allows you to run the grader for the [selfie sys
 
 ### Buttons
 
-If in a Workspace with /selfie/ in the name of the current working directory, the extension adds two buttons at the upper right corner of the editor. \
+If in a Workspace with /selfie/ in the name of the current working directory, the extension adds two buttons at the upper right corner of the editor.
 >Hint: The two buttons are compressed into one button and a dropdown/select menu by VSCode. 
 
 The Labels of the buttons are:
@@ -25,7 +25,7 @@ You can access the command palette by pressing `Ctrl + Shift + P` or `Cmd + Shif
 
 ## Quality of Life Features
 
-If you run `Run Grader` without selecting an assignment beforehand, the Extension will run `Grader Options` automatically. \
+If you run `Run Grader` without selecting an assignment beforehand, the Extension will run `Grader Options` automatically.
 > Hint: After opening the Workspace, no assignment is selected.
 
 Furthermore, if you run `Grader Options` and select an assignment, the extension will run `Run Grader` afterward automatically. 
@@ -51,15 +51,15 @@ Possibilities (that are interesting for students) are `-q` for print grade only 
 * If selecting the `Grader Options` button from the Dropdown Menu, the `Grader Options` is now the active Button that is shown, even though the `Run Grader` button would be the more convenient one to be active. \
 This is the default behavior of the VSCode API and I have not found a way to change it.
 * If running the extension with other extensions like `Code Runner` and/or `C/C++` installed, the Dropdown Menu can get cramped with the functionality/buttons of the other extensions. \
-My suggestion is to disable the other extensions in this workspace, as they are not needed for the selfie system anyways (Execpt IntelliSense for C) (Correct me if I am wrong). \
+My suggestion is to disable the other extensions in this workspace, as they are not needed for the selfie system anyways (Execpt IntelliSense for C) (Correct me if I am wrong).
 
 ## Why
 
 Valid Question: Why did I create this extension? \
-Answer: I was tired of typing `python3 /selfie/grader/self.py` to list all Options, then Copy the assignment I want to run the grader for, to then Paste `python3 /selfie/grader/self.py <assignment>` to run the grader. \
+Answer: I was tired of typing `python3 /selfie/grader/self.py` to list all Options, then Copy the assignment I want to run the grader for, to then Paste `python3 /selfie/grader/self.py <assignment>` to run the grader.
 > Note: Yes I made an alias for `python3 /selfie/grader/self.py`, but I still had to type `grade` to run the alias.
 
-And if something went wrong and I run some local tests, I had to type `grade <assignment>` again to run the grader again, or I had to go through like 20 - 40 history commands to find the command I used to run the grader. \
+And if something went wrong and I run some local tests, I had to type `grade <assignment>` again to run the grader again, or I had to go through like 20 - 40 history commands to find the command I used to run the grader.
 
 So I did what every normal person would do: I spent three days of my life creating a Program that solves a problem that would take me in total not more than 5 minutes to solve manually every time. \
 Your welcome =\)

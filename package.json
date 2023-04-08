@@ -6,7 +6,7 @@
   "author": {
     "name": "Julian Oberhofer"
   },
-  "publisher": "Julian Oberhofer",
+  "publisher": "JulianOberhofer",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.77.0"
