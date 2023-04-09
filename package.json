@@ -2,7 +2,7 @@
   "name": "selfie-grader",
   "displayName": "Selfie Grader",
   "description": "This Extension lets you use a \"run\" Button in the upper right corner to run the assignment grader",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "Julian Oberhofer"
   },
