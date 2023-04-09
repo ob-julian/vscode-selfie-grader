@@ -46,6 +46,45 @@ This extension contributes the following settings:
 * `selfie-grader.option`: Options to pass to the grader. (Default is __empty__) \
 Possibilities (that are interesting for students) are `-q` for print grade only and `-s` for do not show the processing spinner.
 
+## Instalation
+
+### From the Marketplace
+
+1. Open the Extensions View on VSCode (`Ctrl + Shift + X` or `Cmd + Shift + X` on Mac)
+2. Search for `selfie-grader`
+3. Click on `Install`
+
+### From a .vsix File
+
+1. Download the latest .vsix file from the [Releases](https://github.com/ob-julian/vscode-selfie-grader/releases) page.
+2. Open the Extensions View on VSCode (`Ctrl + Shift + X` or `Cmd + Shift + X` on Mac)
+3. Click on the `...` button in the upper right corner of the Extensions View
+4. Click on `Install from VSIX...`
+5. Select the .vsix file you downloaded in step 1.
+
+### From Source
+
+Prerequisites:
+1. If you have not installed the [Node.js](https://nodejs.org/en/) runtime, install it
+2. Open a terminal and run `npm install -g @vscode/vsce`
+
+Steps:
+
+1. Clone the [GitHub Repository](https://github.com/ob-julian/vscode-selfie-grader) or download the source code as a .zip file from the `<> Code` button or download the source code as a .zip file from the [Releases](https://github.com/ob-julian/vscode-selfie-grader/releases) page or the [GitHub Repository](https://github.com/ob-julian/vscode-selfie-grader)
+2. If you downloaded the source code as a .zip file, extract the .zip file
+3. Open a terminal and navigate to the directory where you cloned the repository or extracted the .zip file
+4. Run `vsce package` to create a .vsix file
+5. Follow the steps from the `From a .vsix File` section
+
+## WLS Support
+
+If you are using the Windows Subsystem for Linux (WSL) and want to use this extension, make sure you follow the following steps:
+
+1. Install the [Remote - WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension and enable it
+2. Connect to the WSL instance by clicking on the green button `Open a Remote Window` in the lower left corner of the editor and selecting the WSL instance you want to connect to
+3. Install the extension in the WSL instance (Follow the steps from the `Installation` section)
+4. Open your project in the WSL instance in VSCode (You can check if you are in the WSL instance by looking at the bottom left corner of the editor. If it says `WSL: <name of the WSL instance>`, you are in the WSL instance)
+
 ## Known Issues
 
 * If selecting the `Grader Options` button from the Dropdown Menu, the `Grader Options` is now the active Button that is shown, even though the `Run Grader` button would be the more convenient one to be active. \
