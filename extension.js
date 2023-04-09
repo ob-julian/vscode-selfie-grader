@@ -50,9 +50,13 @@ function activate(context) {
 		else if(vscode.workspace.getConfiguration('selfie-grader').get('runInTerminal') === true){
 			//run the command in a terminal
 
+			//find or create terminal
 			if(terminal === undefined){
-				terminal = vscode.window.createTerminal('Grader');
+				terminal = vscode.window.terminals.find(terminal => terminal.name === 'Grader');
+				if(terminal === undefined)
+					terminal = vscode.window.createTerminal('Grader');
 			}
+
 			//setup
 			terminal.sendText(''); //to dispose of the previous text in the terminal
 			terminal.sendText('cd \'' + workspaceRoot + '\'');
@@ -76,6 +80,7 @@ function activate(context) {
 		else {
 			//run the command in the output channel
 
+			//create output channels
 			if(errorChannel === undefined){
 				errorChannel = vscode.window.createOutputChannel('Grader Error');
 			}
@@ -101,8 +106,7 @@ function activate(context) {
 			outputChannel.appendLine('');
 			outputChannel.appendLine(info);
 
-			const pythonProcess = spawn('python3', [relativePathToPyProgramm, selected, graderArguments], { cwd: workspaceRoot });
-
+			const pythonProcess = graderArguments === '' ? spawn('python3', [relativePathToPyProgramm, selected], { cwd: workspaceRoot }) : spawn('python3', [relativePathToPyProgramm, selected, graderArguments], { cwd: workspaceRoot });
 			let stdoutUsed = false;
 			let stderrUsed = false;
 			if(out != disclaimer1 + '\n' + disclaimer2 + '\n\n'){
