@@ -39,7 +39,7 @@ function activate(context) {
 
 		const clearPreviousOutput = vscode.workspace.getConfiguration('selfie-grader').get('clearPreviousOutput') === true;
 		const preserveFocus = vscode.workspace.getConfiguration('selfie-grader').get('preserveFocus') === true;
-		const options = vscode.workspace.getConfiguration('selfie-grader').get('options');
+		const graderArguments = vscode.workspace.getConfiguration('selfie-grader').get('graderArguments');
 
 		//const exec = require('child_process').exec;
 		//const pythonFileRelativePath = path.relative(workspaceRoot, path.join(currentDir, 'grader', 'self.py'));
@@ -66,7 +66,7 @@ function activate(context) {
 				errorChannel.hide();
 			}
 			terminal.show(preserveFocus);
-			terminal.sendText('python3 \'' + relativePathToPyProgramm + '\' ' + selected + ' ' + options);
+			terminal.sendText('python3 \'' + relativePathToPyProgramm + '\' ' + selected + ' ' + graderArguments);
 			//5 sec timeout to prevent spamming the grader
 			setTimeout(function(){
 				grading = false;
@@ -94,8 +94,6 @@ function activate(context) {
 			outputChannel.show(preserveFocus);
 
 			const { spawn } = require('child_process');
-
-			//disclaimer: VSCodes output channel does not support ANSI escape codes, so the output is not colored
 			
 			const info = 'Running grader for assignment ' + selected + '...';
 			outputChannel.appendLine(disclaimer1);
@@ -103,7 +101,7 @@ function activate(context) {
 			outputChannel.appendLine('');
 			outputChannel.appendLine(info);
 
-			const pythonProcess = spawn('python3', [relativePathToPyProgramm, selected, options], { cwd: workspaceRoot });
+			const pythonProcess = spawn('python3', [relativePathToPyProgramm, selected, graderArguments], { cwd: workspaceRoot });
 
 			let stdoutUsed = false;
 			let stderrUsed = false;
@@ -151,25 +149,40 @@ function activate(context) {
 
 	context.subscriptions.push(runGraderCommand);
 
+	vscode.window.withProgress({
+		location: vscode.ProgressLocation.Notification,
+		title: "Initializing Selfie Grader Assignments",
+		cancellable: false
+	}, () => {
+		return new Promise((resolve) => {
+			const fs = require('fs');
 
-	const fs = require('fs');
 
+			const readStream = fs.createReadStream(absolutePathToPyProgramm, { encoding: 'utf-8' });
+			let assignment = '';
+			readStream.on('data', function(chunk) {
+				const data = chunk.toString(); //(chunk can be Buffer or String) so toString() is to avoid that a Buffer split (which does not exist) is called
+				const assignmentRaw = data.split('Assignment(\'');
+				for (let i = 1; i < assignmentRaw.length; i++) {
+					const assignmentSplit = assignmentRaw[i].split('\', \'')
+					if(assignmentSplit[1] !== assignment) {
+						assignment = assignmentSplit[1];
+						assignments.push([assignment + ' Assignments', 'separator']);
+					}
+					assignments.push([assignmentSplit[0], assignment.toLocaleLowerCase()]);
+				}
+			});
 
-	const readStream = fs.createReadStream(absolutePathToPyProgramm, { encoding: 'utf-8' });
+			readStream.on('error', function(err) {
+				vscode.window.showErrorMessage('Error reading file: ' + err.message);
+			});
 
-	readStream.on('data', function(chunk) {
-		const data = chunk.toString(); //(chunk can be Buffer or String) so toString() is to avoid that a Buffer split (which does not exist) is called
-		const assignmentRaw = data.split('Assignment(\'');
-		for (let i = 1; i < assignmentRaw.length; i++) {
-			assignments.push(assignmentRaw[i].split('\'')[0]);
-		}
+			readStream.on('end', function() {
+				resolve();
+			});	
+
+		});
 	});
-
-	readStream.on('error', function(err) {
-		vscode.window.showErrorMessage('Error reading file: ' + err.message);
-	});
-
-
 
 	const showOptionsCommand = vscode.commands.registerTextEditorCommand('selfie-grader.graderOptions', () => {
 		if(!isInSelfie()){
@@ -187,17 +200,32 @@ function activate(context) {
 		}
 		
 		const quickPick = vscode.window.createQuickPick();
-		quickPick.items = assignments.map(label => ({ label }));
+		const showAssignmentGroups = vscode.workspace.getConfiguration('selfie-grader').get('showAssignmentGroups');
+		const assignmentsFilter = [];
+		let selectedItem;
+		for (const [key, value] of Object.entries(showAssignmentGroups)) {
+			if(value == 'false'){
+				assignmentsFilter.push(key.toLocaleLowerCase());
+			}
+		}
+		quickPick.items = assignments.filter( (value) => {
+			let assignment = value[1].toLowerCase();
+			if(assignmentsFilter.includes(assignment))
+				return false;
+			return true;
+			}
+		).map(label => {
+			if(label[1] === 'separator'){
+				return { label: label[0], kind: vscode.QuickPickItemKind.Separator };
+			}
+			if(label[0] === selected){
+				selectedItem = {label: label[0]};
+				return selectedItem;
+			}
+			return {label: label[0]};
+		});
 		quickPick.placeholder = 'Select an assignment';
 		quickPick.canSelectMany = false;
-		//quickPick.selectedItems = assignments.map(label => ({ label })); TODO: select the last selected item
-		/*if (selected) {
-			const selectedItem = quickPick.items.find(item => item.label === selected);
-			if (selectedItem) {
-				quickPick.selectedItems = [selectedItem];
-				console.log(selectedItem);
-			}
-		}*/
 		quickPick.onDidHide(() => quickPick.dispose());
 		quickPick.onDidAccept(() => {
 			quickPick.dispose();
@@ -205,19 +233,29 @@ function activate(context) {
 		});
 		quickPick.onDidChangeSelection(selection => {
 			if (selection[0]) {
-				//vscode.window.showInformationMessage(`You selected ${selection[0].label}`);
 				selected = selection[0].label;
 				quickPick.dispose();
 				vscode.commands.executeCommand('selfie-grader.runGrader',);
 			}
 		});
+		quickPick.onDidHide(() => quickPick.dispose());
 		quickPick.show();
-	});
+		quickPick.activeItems = [selectedItem];
+
+		});
 
 	context.subscriptions.push(showOptionsCommand);
 }
 
-function deactivate() {}
+function deactivate() {
+	if(outputChannel !== undefined)
+		outputChannel.dispose();
+	if(errorChannel !== undefined)
+		errorChannel.dispose();
+	if(terminal !== undefined)
+		terminal.dispose();
+	//TODO: dispose at exit or reengage at startup
+}
 
 module.exports = {
 	activate,

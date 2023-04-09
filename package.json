@@ -105,10 +105,20 @@
           "description": "Whether to preserve focus on the code editor afte the grader is triggered.",
           "scope": "resource"
         },
-        "selfie-grader.options": {
+        "selfie-grader.graderArguments": {
           "type": "string",
           "default": "",
-          "description": "Options to pass to the grader.",
+          "description": "Arguments to pass to the grader.",
+          "scope": "resource"
+        },
+        "selfie-grader.showAssignmentGroups": {
+          "type": "object",
+          "default": {
+            "general": "true",
+            "compiler": "true",
+            "systems": "true"
+          },
+          "description": "Assignment groups to be shown in 'Grader Options'.",
           "scope": "resource"
         }
       }

@@ -43,8 +43,13 @@ This extension contributes the following settings:
 * `selfie-grader.clearPreviousOutput`: Whether to clear previous output before each run.  (Default is __true__)
 * `selfie-grader.runInTerminal`: Whether to run the grader in Integrated Terminal. (Default is __false__)
 * `selfie-grader.runInTerminal`: Whether to preserve focus on the code editor after the grader is triggered. (Default is __true__)
-* `selfie-grader.option`: Options to pass to the grader. (Default is __empty__) \
+* `selfie-grader.graderArguments`: Arguments to pass to the grader. (Default is __empty__) \
 Possibilities (that are interesting for students) are `-q` for print grade only and `-s` for do not show the processing spinner.
+* `selfie-grader.showAssignmentGroups`: Assignment groups to be shown in 'Grader Options'. \
+The format is: `"<name of the assignment group>": boolean`. \
+Default assignments are: `general`, `compiler`, and `systems`. \
+If ever new assignment groups are added to the selfie system, just add them to the list, I made the decision to make it like that and not via a button for each assignment, to future proof the extension. \
+Furthermore, assignments are only hidden if the corresponding boolean is set to `false`, so if a group is not in the list, it will be shown.
 
 ## Instalation
 
@@ -100,7 +105,7 @@ Answer: I was tired of typing `python3 /selfie/grader/self.py` to list all Optio
 
 And if something went wrong and I run some local tests, I had to type `grade <assignment>` again to run the grader again, or I had to go through like 20 - 40 history commands to find the command I used to run the grader.
 
-So I did what every normal person would do: I spent three days of my life creating a Program that solves a problem that would take me in total not more than 5 minutes to solve manually every time. \
+So I did what every normal person would do: I spent six days of my life creating a Program that solves a problem that would take me in total not more than 5 minutes to solve manually every time. \
 Your welcome =\)
 
 ## Release Notes
