@@ -112,6 +112,11 @@ Your welcome =\)
 
 [CHANGELOG.md](CHANGELOG.md)
 
+## Dev Notes
+
+To further develop this extension (probably not needed, as the extension is feature complete and I do not have any plans to add new features, but probably for security updates and minor bug fixes), you can follow the steps from the `From Source` section in the `Installation` part of this README, but instead of running `vsce package`, run `code .` to open the source code in VSCode and then press `F5` to start a new Extension Development Host with the extension loaded. \
+To refresh the extension after making changes, just press `Ctrl + R` or `Cmd + R` on Mac in the Extension Development Host, or restart the Extension Development Host by closing it and pressing `F5` again in the source code window.
+
 ---
 
 **Enjoy!**
